@@ -52,16 +52,16 @@ type Tree[C comparable, T any] struct {
 
 	node    *Node[C, T]
 	items   []lex.Item[C, T]
-	lex     lex.Lexer[C, T]
+	lex     lex.Emitter[C, T]
 	peek    int
 	backup  map[BackupSlot]*Node[C, T]
 	parseFn ParseFn[C, T]
 }
 
-// New creates a parse.Tree with the input lex.Lexer `l` and ParseFn `initParse`,
+// New creates a parse.Tree with the input lex.Emitter `l` and ParseFn `initParse`,
 // initialized with a root node with type T `typ` and values V `values`, on position `-1`.
 func New[C comparable, T any](
-	l lex.Lexer[C, T],
+	l lex.Emitter[C, T],
 	initParse ParseFn[C, T],
 	typ C,
 	values ...T,

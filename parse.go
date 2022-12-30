@@ -32,7 +32,7 @@ func Run[C comparable, T any, R any](
 ) (R, error) {
 	var rootEOF C
 	l := lex.New(initStateFn, input)
-	t := New(l, initParseFn, rootEOF)
+	t := New((lex.Emitter[C, T])(l), initParseFn, rootEOF)
 	t.Parse()
 	return processFn(t)
 }

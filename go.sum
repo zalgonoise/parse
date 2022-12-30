@@ -8,3 +8,5 @@ github.com/zalgonoise/lex v0.0.0-20221226234729-2fbe49e71a2f h1:DUw++/fiWQ+tYhnR
 github.com/zalgonoise/lex v0.0.0-20221226234729-2fbe49e71a2f/go.mod h1:94cLz5MAPMpz3TQSm7QpqFOAg91pmhsyQWN1SXvEkBg=
 github.com/zalgonoise/lex v0.0.0-20221229173845-e58993b1c635 h1:eXj+vizYfxBSEEeoGZ+yWywNlKPgEU6TwjbEUzx+Ld8=
 github.com/zalgonoise/lex v0.0.0-20221229173845-e58993b1c635/go.mod h1:94cLz5MAPMpz3TQSm7QpqFOAg91pmhsyQWN1SXvEkBg=
+github.com/zalgonoise/lex v0.0.0-20221230021834-07e996e37d28 h1:qOObQVL4GDZUPNRDuFqwGm7Ebe9Mj5t+HOZT0gPYR5w=
+github.com/zalgonoise/lex v0.0.0-20221230021834-07e996e37d28/go.mod h1:Lb7mlaHvMkvifKRtlhvnXGdNfmD9VWnf55zW8el4SSY=
