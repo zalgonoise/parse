@@ -16,6 +16,12 @@ The lexer is a state-machine that analyzes input data (split into single units) 
 
 The lexer is usually in-sync with a parser (also a state-machine, running in tandem with a lexer), that will consume the items emited by the lexer to build a parse tree. The parse tree, as the name implies, is a tree graph data structure that will layout the received tokens with a certain path / structure, with some logic in mind. It is finally able to output the processed tree as an output type, configurable by the developer, too.
 
+## Why generics?
+
+Generics are great for when there is a solid algorithm that serves for many types, and can be abstracted enough to work without major workarounds; and this approach to a lexer / parser is very straight-forward and yet so simple (the Go way). Of course when I refer [Rob Pike](https://github.com/robpike)'s talk about lexers I am aware that the context is parsing text (for templating). The *approach with generics* will limit the potential that shines in the original implementation, one way or the other (simply with EOF being a zero value, for example -- zero types should not be used for this).
+
+But all in all, it was a great exercise to practice using generics. Maybe I will just use this library once or twice, maybe it will be actually useful for some. I am just in it for the ride. :)
+
 ## Overview
 
 
