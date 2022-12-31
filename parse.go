@@ -36,3 +36,22 @@ func Run[C comparable, T any, R any](
 	t.Parse()
 	return processFn(t)
 }
+
+// ParseTo is similar to Run, but writes the processed type to type *R `output`
+func ParseTo[C comparable, T any, R any](
+	input []T,
+	initStateFn lex.StateFn[C, T],
+	initParseFn ParseFn[C, T],
+	processFn ProcessFn[C, T, R],
+	output *R,
+) (err error) {
+	var rootEOF C
+	l := lex.New(initStateFn, input)
+	t := New((lex.Emitter[C, T])(l), initParseFn, rootEOF)
+	t.Parse()
+	if output == nil {
+		output = new(R)
+	}
+	*output, err = processFn(t)
+	return err
+}
