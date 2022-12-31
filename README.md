@@ -179,6 +179,31 @@ func Run[C comparable, T any, R any](
 }
 ```
 
+#### ParseTo function
+
+Similar to `Run`, `ParseTo` will process the input into the `output` variable of type `*R`, returning an error if there is one.
+
+```go
+// ParseTo is similar to Run, but writes the processed type to type *R `output`
+func ParseTo[C comparable, T any, R any](
+	input []T,
+	initStateFn lex.StateFn[C, T],
+	initParseFn ParseFn[C, T],
+	processFn ProcessFn[C, T, R],
+	output *R,
+) (err error) {
+	var rootEOF C
+	l := lex.New(initStateFn, input)
+	t := New((lex.Emitter[C, T])(l), initParseFn, rootEOF)
+	t.Parse()
+	if output == nil {
+		output = new(R)
+	}
+	*output, err = processFn(t)
+	return err
+}
+```
+
 ## Implementing
 
 **Note**: *Example and tests can be found in the [`impl`](./impl/) directory; from the lexer to the parser*
