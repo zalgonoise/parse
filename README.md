@@ -520,4 +520,16 @@ func Run[C TextToken, T rune, R string](s []T) (R, error) {
 
 ## Benchmarks
 
-Performance is critical in a lexer or parser. I will add benchmarks (and performance improvements) very soon :)
+### Lex + Parse benchmark
+
+```
+goos: linux
+goarch: amd64
+pkg: github.com/zalgonoise/parse/example/simple-template
+cpu: AMD Ryzen 3 PRO 3300U w/ Radeon Vega Mobile Gfx
+PASS
+benchmark                                 iter        time/iter   bytes alloc          allocs
+---------                                 ----        ---------   -----------          ------
+BenchmarkLexParseAndProcess/Simple-4    284025    5667.00 ns/op     1448 B/op    37 allocs/op
+BenchmarkLexParseAndProcess/Complex-4    49509   25624.00 ns/op     4696 B/op   153 allocs/op
+```
