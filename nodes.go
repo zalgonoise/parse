@@ -56,7 +56,10 @@ func (t *Tree[C, T]) Store(slot BackupSlot) {
 //
 // If siduccessful, this action will also clear the BackupSlot `slot`
 func (t *Tree[C, T]) Load(slot BackupSlot) *Node[C, T] {
-	n := t.backup[slot]
+	n, ok := t.backup[slot]
+	if !ok {
+		return nil
+	}
 	delete(t.backup, slot)
 	return n
 }
@@ -66,7 +69,11 @@ func (t *Tree[C, T]) Load(slot BackupSlot) *Node[C, T] {
 //
 // If successful, this action will also clear the BackupSlot `slot`
 func (t *Tree[C, T]) Jump(slot BackupSlot) (bool, error) {
-	t.node = t.backup[slot]
+	node, ok := t.backup[slot]
+	if !ok {
+		return false, ErrNotFound
+	}
+	t.node = node
 	delete(t.backup, slot)
 	return true, nil
 }
