@@ -1,6 +1,9 @@
 package parse
 
-import "github.com/zalgonoise/lex"
+import (
+	"github.com/zalgonoise/gio"
+	"github.com/zalgonoise/lex"
+)
 
 // ParseFn is similar to the Lexer's StateFn, as a recursive function that the Tree
 // will keep calling during runtime until it runs out of items received from the Lexer
@@ -37,8 +40,8 @@ func Run[C comparable, T any, R any](
 	return processFn(t)
 }
 
-// ParseTo is similar to Run, but writes the processed type to type *R `output`
-func ParseTo[C comparable, T any, R any](
+// To is similar to Run, but writes the processed type to type *R `output`
+func To[C comparable, T any, R any](
 	input []T,
 	initStateFn lex.StateFn[C, T],
 	initParseFn ParseFn[C, T],
@@ -47,6 +50,39 @@ func ParseTo[C comparable, T any, R any](
 ) (err error) {
 	var rootEOF C
 	l := lex.New(initStateFn, input)
+	t := New((lex.Emitter[C, T])(l), initParseFn, rootEOF)
+	t.Parse()
+	if output == nil {
+		output = new(R)
+	}
+	*output, err = processFn(t)
+	return err
+}
+
+// Parse is similar to Run, but it consumes a generic io.Reader, instead
+func Parse[C comparable, T any, R any](
+	input gio.Reader[T],
+	initStateFn lex.StateFn[C, T],
+	initParseFn ParseFn[C, T],
+	processFn ProcessFn[C, T, R],
+) (R, error) {
+	var rootEOF C
+	l := (lex.Lexer[C, T])(lex.NewBuffer(initStateFn, input))
+	t := New((lex.Emitter[C, T])(l), initParseFn, rootEOF)
+	t.Parse()
+	return processFn(t)
+}
+
+// ParseTo is similar to Run, but writes the processed type to type *R `output`
+func ParseTo[C comparable, T any, R any](
+	input gio.Reader[T],
+	initStateFn lex.StateFn[C, T],
+	initParseFn ParseFn[C, T],
+	processFn ProcessFn[C, T, R],
+	output *R,
+) (err error) {
+	var rootEOF C
+	l := lex.NewBuffer(initStateFn, input)
 	t := New((lex.Emitter[C, T])(l), initParseFn, rootEOF)
 	t.Parse()
 	if output == nil {
