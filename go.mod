@@ -2,7 +2,7 @@ module github.com/zalgonoise/parse
 
 go 1.19
 
-require github.com/zalgonoise/lex v0.0.0-20230205180157-9ccf9895988d
+require github.com/zalgonoise/lex v0.0.0-20230210133743-771cae9540b7
 
 require (
 	github.com/zalgonoise/cur v0.0.0-20221228011751-cdba7832420f // indirect
